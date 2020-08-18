@@ -9,12 +9,12 @@ import { Router } from '@angular/router';
 export class LoginComponent implements OnInit {
 
   
-  username = "";
+  email = "";
   password = "";
 
-  accounts= [{"username": "Jye", "password": "abc123"},
-            {"username": "Bob", "password": "123abc"},
-            {"username": "Sam", "password": "sam123"}];
+  accounts= [{"email": "jye@jrobi.co", "password": "abc123"},
+            {"email": "bob@bob.com", "password": "123abc"},
+            {"email": "sam@sammy.com", "password": "sam123"}];
   
   
 
@@ -26,14 +26,14 @@ export class LoginComponent implements OnInit {
   isRegistered() {
     var registered = false;
      for (var i = 0; i < this.accounts.length; i++) {
-       if (this.accounts[i].username == this.username && this.accounts[i].password == this.password) {
+       if (this.accounts[i].email == this.email && this.accounts[i].password == this.password) {
          registered = true;
        }
       }
     if (registered) {
-      this.router.navigateByUrl("/account")
+      this.router.navigateByUrl("/account");
     } else {
-      alert("Invalid credentials")
+      alert("Invalid credentials");
     }
   }
 }
