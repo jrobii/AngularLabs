@@ -1,5 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+const httpOptions = {
+  headers: new HttpHeaders({ 'Content-Type': 'application/json'})
+};
+
+const backUrl = 'http://localhost:3000';
 
 @Component({
   selector: 'app-login',
@@ -9,32 +15,30 @@ import { Router } from '@angular/router';
 export class LoginComponent implements OnInit {
 
   
-  email = "";
+  username = "";
   password = "";
 
-  accounts= [{"email": "jye@jrobi.co", "password": "abc123"},
-            {"email": "bob@bob.com", "password": "123abc"},
-            {"email": "sam@sammy.com", "password": "sam123"}];
-  
-  
-
-  constructor(private router: Router) { }
+  constructor(private router: Router, private httpClient: HttpClient) { }
 
   ngOnInit(): void {
   }
 
-  isRegistered() {
-    var registered = false;
-     for (var i = 0; i < this.accounts.length; i++) {
-       if (this.accounts[i].email == this.email && this.accounts[i].password == this.password) {
-         registered = true;
-       }
+  public isRegistered() {
+    let user = {username: this.username, password: this.password};
+    this.httpClient.post(backUrl + '/api/auth', user, httpOptions).subscribe((data: any) => {
+      if (data.ok) {
+        sessionStorage.setItem('username', data.username);
+        sessionStorage.setItem('birthdate', data.birthdate);
+        sessionStorage.setItem('age', data.age.toString());
+        sessionStorage.setItem('email', data.email)
+        sessionStorage.setItem('status', data.ok.toString())
+        this.router.navigateByUrl("/account")
+      } else {
+        alert("Invalid credentials");
+        sessionStorage.clear();
+        sessionStorage.setItem('status', "false");
       }
-    if (registered) {
-      this.router.navigateByUrl("/account");
-    } else {
-      alert("Invalid credentials");
-    }
+    });
   }
 }
 
