@@ -11,7 +11,7 @@ module.exports = function(app, path) {
         accounts= [
             new User("jye", "abc123", "jye@jrobi.co", 20, "13/10/1999"),
             new User("bob", "123abc", "bob@jrobi.co", 40, "29/04/1979"),
-            new User("sam", "sam123", "sam@jrobi.co", 55, "sam@jrobi.co")]
+            new User("sam", "sam123", "sam@jrobi.co", 55, "08/11/1965")]
 
         if (!req.body) {
             return res.sendStatus(400);
